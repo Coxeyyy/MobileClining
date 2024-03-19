@@ -20,14 +20,31 @@ import java.util.Optional;
 public class SpecialistServiceImpl implements SpecialistService {
 
     private final EmployeeRepository employeeRepository;
+    private final OrderRepository orderRepository;
 
-    public SpecialistServiceImpl(EmployeeRepository employeeRepository) {
+    public SpecialistServiceImpl(EmployeeRepository employeeRepository, OrderRepository orderRepository) {
         this.employeeRepository = employeeRepository;
+        this.orderRepository = orderRepository;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Employee> getAllSpecialists() {
         return employeeRepository.findEmployeesByRole(Role.SPECIALIST);
+    }
+
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void setSpecialistToOrder(int id, String specialistId) {
+        Optional<Order> orderById = orderRepository.findById(id);
+        Optional<Employee> specialistById = employeeRepository.findById(Integer.parseInt(specialistId));
+        if (orderById.isPresent() && specialistById.isPresent()) {
+            Order order = orderById.get();
+            Employee specialist = specialistById.get();
+            order.setEmployee(specialist);
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Произошла ошибка");
+        }
     }
 
 }

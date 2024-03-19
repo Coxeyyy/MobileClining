@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet"/>
+    <title>order by id</title>
+</head>
+<body>
+
+Заказ
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Услуги</th>
+        <th>Статус</th>
+        <th>Сумма заказа</th>
+        <th>Заказчик</th>
+        <th>Специалист</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${order.getId()}">id</td>
+        <td th:text="${order.getItems()}">list</td>
+        <td th:text="${order.getStatus.getCode()}">status</td>
+        <td th:text="${order.getOrderPrice()}">price</td>
+        <td th:text="${order.getCustomer().getLogin()}">customer</td>
+        <td>
+            <span th:if="${order.getEmployee()}" th:text="${order.getEmployee().getLogin()}"></span>
+            <span th:if="${order.getEmployee()} == null" th:text="'Специалист не назначен или уволен'"></span>
+        </td>
+        <td>
+            <form th:method="PATCH" th:action="@{/adminpanel/orders/{id}(id=${order.getId()})}">
+                <select name="selectedOption">
+                    <option th:each="specialist: ${specialists}"
+                            th:text="${specialist.getLogin()}"
+                            th:value="${specialist.getId()}">
+                        specialist
+                </select>
+                <button type="submit">Назначить специалиста</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel/orders}">Назад</a>
+</body>
+</html>

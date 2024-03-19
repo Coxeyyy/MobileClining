@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.coxey.diplom.model.Customer;
 import ru.coxey.diplom.model.Employee;
+import ru.coxey.diplom.model.Order;
 import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.service.*;
 import ru.coxey.diplom.util.PersonValidator;
@@ -24,14 +25,19 @@ public class AdminController {
     private final EmployeeService employeeService;
     private final SpecialistService specialistService;
     private final CustomerService customerService;
+    private final OrderService orderService;
 
-    public AdminController(RegistrationService registrationService, PersonValidator personValidator, AdminService adminService, EmployeeService employeeService, SpecialistService specialistService, CustomerService customerService) {
+    public AdminController(RegistrationService registrationService, PersonValidator personValidator,
+                           AdminService adminService, EmployeeService employeeService,
+                           SpecialistService specialistService, CustomerService customerService,
+                           OrderService orderService) {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
         this.adminService = adminService;
         this.employeeService = employeeService;
         this.specialistService = specialistService;
         this.customerService = customerService;
+        this.orderService = orderService;
     }
 
     @GetMapping()
@@ -184,5 +190,36 @@ public class AdminController {
         model.addAttribute("customer", customerService.getCustomerById(id));
         model.addAttribute("ordersByCustomer", customerService.getOrdersByCustomer(id));
         return "adminpanel/customer/getOrdersByCustomer";
+    }
+
+    // Все заказы
+    @GetMapping("/orders")
+    public String getAllOrders(Model model) {
+        model.addAttribute("orders", orderService.getAllOrders());
+        return "adminpanel/order/orders";
+    }
+
+    // Заказ по ID
+    @GetMapping("/orders/{id}")
+    public String getOrderById(Model model, @PathVariable("id") int id) {
+        model.addAttribute("order", orderService.getOrderById(id));
+        model.addAttribute("specialists", specialistService.getAllSpecialists());
+        return "adminpanel/order/showOrderByIndex";
+    }
+
+    // Назначить специалиста на заказ
+    @PatchMapping("/orders/{id}")
+    public String setSpecialistToOrder(@PathVariable("id") int id, @RequestParam("selectedOption") String specialistId) {
+        specialistService.setSpecialistToOrder(id, specialistId);
+        return "redirect:/adminpanel";
+    }
+
+    // Получить активные заказы
+    @GetMapping("/activeOrders")
+    public String checkActiveOrders(Model model) {
+        model.addAttribute("activeOrders", orderService.getActiveOrders());
+        model.addAttribute("specialists", specialistService.getAllSpecialists());
+        model.addAttribute("order", new Order());
+        return "adminpanel/order/checkActiveOrders";
     }
 }
