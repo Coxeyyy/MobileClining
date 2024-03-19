@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>All admins</title>
+</head>
+<body>
+Все админы
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Статус</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="admin : ${admins}">
+        <td th:text="${admin.getId()}">id</td>
+        <td th:text="${admin.getLogin()}">list</td>
+        <td th:text="${admin.getRole.getCode()}">status</td>
+        <td>
+            <a th:href="@{/adminpanel/admins/{id}(id=${admin.getId()})}">Информация об админе</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel}">Назад</a>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet"/>
+    <title>Admin</title>
+</head>
+<body>
+
+Админ
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Статус</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${admin.getId()}">id</td>
+        <td th:text="${admin.getLogin()}">list</td>
+        <td th:text="${admin.getRole.getCode()}">status</td>
+        <td>
+            <a th:href="@{/adminpanel/admins/{id}/edit(id=${admin.getId()})}">Изменить данные</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/adminpanel/admins/{id}(id=${admin.getId()})}">
+                <input type="submit" value="Удалить администратора"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel/admins}">Назад</a>
+</body>
+</html>
