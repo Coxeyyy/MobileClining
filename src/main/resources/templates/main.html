@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <title>Main page</title>
+</head>
+<body class="body">
+<div class="container">
+    <p>
+    <h1>Добро пожаловать в систему выездного клининга</h1>
+    <br>
+    <div>
+        <h2>
+            <span th:if="${employee.getRole.getCode()} == 'Администратор'">
+                <a href="/adminpanel">Открыть панель администратора</a>
+            </span>
+            <span th:if="${employee.getRole.getCode()} == 'Специалист'">
+                <a href="/specialistpanel">Открыть панель специалиста</a>
+            </span>
+            <span>
+                    <br>
+                <a href="/logout">Выйти</a>
+            </span>
+        </h2>
+    </div>
+    </p>
+</div>
+
+</body>
+</html>

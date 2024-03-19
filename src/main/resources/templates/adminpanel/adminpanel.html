@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>
+    <title>Admin panel</title>
+</head>
+<body class="body">
+<div class="container">
+    <h1>Панель администратора</h1>
+    <div class="table">
+        <div class="table_first">
+            <div class="table_row" pla>Зарегистировать нового сотрудника</div>
+            <div class="table_row">Открыть список администраторов</div>
+            <div class="table_row">Открыть список специалистов</div>
+            <div class="table_row">Открыть список заказчиков</div>
+            <div class="table_row">Открыть список заказов</div>
+            <div class="table_row">Открыть список услуг</div>
+            <div class="table_row">Открыть список активных заказов</div>
+        </div>
+        <div class="table_second">
+            <a class="table_row" href="/adminpanel/register">Открыть</a>
+            <a class="table_row" href="/adminpanel/admins">Открыть</a>
+            <a class="table_row" href="/adminpanel/specialists">Открыть</a>
+            <a class="table_row" href="/adminpanel/customers">Открыть</a>
+            <a class="table_row" href="/adminpanel/orders">Открыть</a>
+            <a class="table_row" href="/adminpanel/items">Открыть</a>
+            <a class="table_row" href="/adminpanel/activeOrders">Открыть</a>
+        </div>
+    </div>
+    <br/>
+    <a style="font-size:20px" th:href="@{/logout}">Выйти</a>
+</body>
+</html>

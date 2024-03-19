@@ -1,0 +1,20 @@
+.table, .table_second {
+    display: flex;
+}
+
+.table_row {
+    border: 1px solid black;
+    padding-top: 10px;
+}
+
+.table_second {
+    flex-direction: column;
+}
+
+.table_second, .table_first {
+    width: 300px;
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+}
