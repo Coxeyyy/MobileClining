@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Заказы специалиста</title>
+</head>
+<body>
+
+Заказы специалиста <p th:text="${specialist.getLogin()}">VALUE</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Услуги</th>
+        <th>Статус</th>
+        <th>Сумма заказа</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${ordersBySpecialist}">
+        <td th:text="${order.getId()}">id</td>
+        <td th:text="${order.getItems()}">list</td>
+        <td th:text="${order.getStatus.getCode()}">status</td>
+        <td th:text="${order.getOrderPrice()}">price</td>
+        <td>
+            <a th:href="@{/adminpanel/orders/{id}(id=${order.getId()})}">Информация о заказе</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel/specialists/{id}(id=${specialist.getId()})}">Назад</a>
+</body>
+</html>

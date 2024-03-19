@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Specialist</title>
+</head>
+<body>
+
+Специалист
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Статус</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${specialist.getId()}">id</td>
+        <td th:text="${specialist.getLogin()}">list</td>
+        <td th:text="${specialist.getRole.getCode()}">status</td>
+        <td>
+            <a th:href="@{/adminpanel/specialists/{id}/edit(id=${specialist.getId()})}">Изменить данные</a>
+        </td>
+        <td>
+            <a th:href="@{/adminpanel/specialists/{id}/orders(id=${specialist.getId()})}">Заказы специалиста</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/adminpanel/specialists/{id}(id=${specialist.getId()})}">
+                <input type="submit" value="Удалить специалиста"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel/specialists}">Назад</a>
+
+</body>
+</html>

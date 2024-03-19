@@ -9,6 +9,7 @@ import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.service.AdminService;
 import ru.coxey.diplom.service.EmployeeService;
 import ru.coxey.diplom.service.RegistrationService;
+import ru.coxey.diplom.service.SpecialistService;
 import ru.coxey.diplom.util.PersonValidator;
 
 import javax.validation.Valid;
@@ -23,12 +24,14 @@ public class AdminController {
     private final PersonValidator personValidator;
     private final AdminService adminService;
     private final EmployeeService employeeService;
+    private final SpecialistService specialistService;
 
-    public AdminController(RegistrationService registrationService, PersonValidator personValidator, AdminService adminService, EmployeeService employeeService) {
+    public AdminController(RegistrationService registrationService, PersonValidator personValidator, AdminService adminService, EmployeeService employeeService, SpecialistService specialistService) {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
         this.adminService = adminService;
         this.employeeService = employeeService;
+        this.specialistService = specialistService;
     }
 
     @GetMapping()
@@ -104,6 +107,53 @@ public class AdminController {
     // Удаление админа
     @DeleteMapping("/admins/{id}")
     public String deleteAdmin(@PathVariable("id") int id) {
+        employeeService.deleteEmployee(id);
+        return "redirect:/adminpanel";
+    }
+
+    // Получение всех специалистов
+    @GetMapping("/specialists")
+    public String getAllSpecialist(Model model) {
+        model.addAttribute("specialists", specialistService.getAllSpecialists());
+        return "adminpanel/specialist/specialists";
+    }
+
+    // Специалист по ID
+    @GetMapping("/specialists/{id}")
+    public String getSpecialistById(Model model, @PathVariable("id") int id) {
+        model.addAttribute("specialist", employeeService.getEmployeeById(id));
+        return "adminpanel/specialist/showSpecialistByIndex";
+    }
+
+    // Изменение специалистов
+    @GetMapping("/specialists/{id}/edit")
+    public String editSpecialist(Model model, @PathVariable("id") int id) {
+        model.addAttribute("specialist", employeeService.getEmployeeById(id));
+        List<Role> role = new ArrayList<>();
+        role.add(Role.getByCode("Администратор"));
+        role.add(Role.getByCode("Специалист"));
+        model.addAttribute("roles", role);
+        return "adminpanel/specialist/editSpecialist";
+    }
+
+    // Обновление инфы по спецам
+    @PatchMapping("/specialists/{id}")
+    public String updateSpecialist(@ModelAttribute("specialist") @Valid Employee specialist,
+                                   BindingResult bindingResult, Model model, @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            List<Role> role = new ArrayList<>();
+            role.add(Role.getByCode("Администратор"));
+            role.add(Role.getByCode("Специалист"));
+            model.addAttribute("roles", role);
+            return "adminpanel/specialist/editSpecialist";
+        }
+        employeeService.updateEmployee(specialist, id);
+        return "redirect:/adminpanel/specialists";
+    }
+
+    // Удалить специалиста
+    @DeleteMapping("/specialists/{id}")
+    public String deleteSpecialist(@PathVariable("id") int id) {
         employeeService.deleteEmployee(id);
         return "redirect:/adminpanel";
     }
