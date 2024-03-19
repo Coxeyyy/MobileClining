@@ -4,12 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.coxey.diplom.model.Customer;
 import ru.coxey.diplom.model.Employee;
 import ru.coxey.diplom.model.enums.Role;
-import ru.coxey.diplom.service.AdminService;
-import ru.coxey.diplom.service.EmployeeService;
-import ru.coxey.diplom.service.RegistrationService;
-import ru.coxey.diplom.service.SpecialistService;
+import ru.coxey.diplom.service.*;
 import ru.coxey.diplom.util.PersonValidator;
 
 import javax.validation.Valid;
@@ -25,13 +23,15 @@ public class AdminController {
     private final AdminService adminService;
     private final EmployeeService employeeService;
     private final SpecialistService specialistService;
+    private final CustomerService customerService;
 
-    public AdminController(RegistrationService registrationService, PersonValidator personValidator, AdminService adminService, EmployeeService employeeService, SpecialistService specialistService) {
+    public AdminController(RegistrationService registrationService, PersonValidator personValidator, AdminService adminService, EmployeeService employeeService, SpecialistService specialistService, CustomerService customerService) {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
         this.adminService = adminService;
         this.employeeService = employeeService;
         this.specialistService = specialistService;
+        this.customerService = customerService;
     }
 
     @GetMapping()
@@ -156,5 +156,33 @@ public class AdminController {
     public String deleteSpecialist(@PathVariable("id") int id) {
         employeeService.deleteEmployee(id);
         return "redirect:/adminpanel";
+    }
+
+    @GetMapping("/customers")
+    public String getAllCustomers(Model model) {
+        model.addAttribute("customers", customerService.getAllCustomers());
+        return "adminpanel/customer/customers";
+    }
+
+    //  Заказчик по ID
+    @GetMapping("/customers/{id}")
+    public String getCustomerById(Model model, @PathVariable("id") int id) {
+        model.addAttribute("customer", customerService.getCustomerById(id));
+        return "adminpanel/customer/showCustomerByIndex";
+    }
+
+    // Удалить заказчика
+    @DeleteMapping("/customers/{id}")
+    public String deleteCustomer(@PathVariable("id") int id) {
+        customerService.deleteCustomer(id);
+        return "redirect:/adminpanel";
+    }
+
+    // Получить список заказов конкретного заказчика
+    @GetMapping("/customers/{id}/orders")
+    public String getOrdersByCustomer(Model model, @PathVariable("id") int id) {
+        model.addAttribute("customer", customerService.getCustomerById(id));
+        model.addAttribute("ordersByCustomer", customerService.getOrdersByCustomer(id));
+        return "adminpanel/customer/getOrdersByCustomer";
     }
 }

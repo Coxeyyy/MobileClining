@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Customer</title>
+</head>
+<body>
+
+Заказчик
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Статус</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${customer.getId()}">id</td>
+        <td th:text="${customer.getLogin()}">list</td>
+        <td th:text="${customer.getRole.getCode()}">status</td>
+        <td>
+            <a th:href="@{/adminpanel/customers/{id}/orders(id=${customer.getId()})}">Все заказы пользователя</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/adminpanel/customers/{id}(id=${customer.getId()})}">
+                <input type="submit" value="Удалить пользователя"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/adminpanel/customers}">Назад</a>
+</body>
+</html>
