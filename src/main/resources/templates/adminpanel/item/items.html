@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Все предметы</title>
+</head>
+<body>
+
+Все предметы
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Цена</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.getId()}">id</td>
+        <td th:text="${item.getName()}">list</td>
+        <td th:text="${item.getPrice()}">status</td>
+        <td>
+            <a th:href="@{/adminpanel/items/{id}(id=${item.getId()})}">Информация об услуге</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/adminpanel/items/new}">Создать новую услугу</a>
+<br/>
+<a th:href="@{/adminpanel}">Назад</a>
+</body>
+</html>

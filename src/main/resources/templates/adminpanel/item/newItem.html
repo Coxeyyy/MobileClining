@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <title>Create new Item</title>
+</head>
+<body class="body">
+
+<div class="container">
+    <form th:method="POST" th:action="@{/adminpanel/items/new}" th:object="${item}">
+        <h2>Создание новой услуги</h2>
+        <div class="table">
+            <div class="table_first">
+                <div class="table_row" pla>Введите имя</div>
+                <div class="table_row">Введите цену</div>
+            </div>
+            <div class="table_second">
+                <input class="table_row" type="text" th:field="*{name}" id="name"/>
+                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                <input class="table_row" type="text" th:field="*{price}" id="price"/>
+                <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</div>
+            </div>
+        </div>
+        <input type="submit" value="Создать"/>
+    </form>
+    <br/>
+    <a th:href="@{/adminpanel/items}">Назад</a>
+</div>
+
+</body>
+</html>

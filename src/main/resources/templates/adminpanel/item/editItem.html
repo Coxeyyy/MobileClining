@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <title>Услуга</title>
+</head>
+<body class="body">
+
+<div class="container">
+    <form th:method="PATCH" th:action="@{/adminpanel/items/{id}(id=${item.getId()})}" th:object="${item}">
+        <h2>Изменение данных услуги</h2>
+        <div class="table">
+            <div class="table_first">
+                <div class="table_row" pla>Имя</div>
+                <div class="table_row">Введите цену</div>
+            </div>
+            <div class="table_second">
+                <input class="table_row" type="text" th:field="*{name}" id="name" readonly/>
+                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                <input class="table_row" type="text" th:field="*{price}" id="price"/>
+                <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</div>
+            </div>
+        </div>
+        <input type="submit" value="Обновить"/>
+    </form>
+    <br/>
+    <a th:href="@{/adminpanel/items/{id}(id=${item.getId()})}">Назад</a>
+</div>
+</body>
+</html>
