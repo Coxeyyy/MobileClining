@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>
+    <title>Register new Employee</title>
+</head>
+<body class="body">
+<div class="container">
+    <form th:method="POST" th:action="@{/adminpanel/register}" th:object="${employee}">
+        <h2>Регистрация нового сотрудника</h2>
+        <div class="table">
+            <div class="table_first">
+                <div class="table_row" pla>Введите логин</div>
+                <div class="table_row">Введите пароль</div>
+                <div class="table_row">Выберите роль</div>
+            </div>
+            <div class="table_second">
+                <input class="table_row" type="text" th:field="*{login}" id="username"/>
+                <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
+                <input class="table_row" type="password" th:field="*{password}" id="password"/>
+                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error
+                </div>
+                <select class="table_row" th:field="*{role}">
+                    <option th:each="Role: ${roles}"
+                            th:text="${Role.value}"
+                            th:value="${Role}">
+                        role
+                    </option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Sign up!"/>
+    </form>
+</div>
+</body>
+</html>
