@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Specialist panel</title>
+    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>
+    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>
+</head>
+<body class="body">
+
+<div class="container">
+    <h1>Панель специалиста</h1>
+    <div class="table">
+        <div class="table_first">
+            <div class="table_row" pla>Открыть список всех заказов</div>
+            <div class="table_row">Открыть список активных заказов</div>
+        </div>
+        <div class="table_second">
+            <a class="table_row" href="/specialistpanel/orders">Открыть</a>
+            <a class="table_row" href="/specialistpanel/activeOrders">Открыть</a>
+        </div>
+    </div>
+    <br/>
+    <a style="font-size:20px" th:href="@{/logout}">Выйти</a>
+</body>
+</html>

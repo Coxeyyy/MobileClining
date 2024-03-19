@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Active orders</title>
+</head>
+<body>
+
+Active orders
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Услуги</th>
+        <th>Статус</th>
+        <th>Сумма заказа</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.getId()}">id</td>
+        <td th:text="${order.getItems()}">list</td>
+        <td th:text="${order.getStatus.getCode()}">status</td>
+        <td th:text="${order.getOrderPrice()}">price</td>
+        <td>
+            <a th:href="@{/specialistpanel/orders/{id}(id=${order.getId()})}">Информация о заказе</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/specialistpanel}">Назад</a>
+</body>
+</html>

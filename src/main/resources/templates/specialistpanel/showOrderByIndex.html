@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/style_css/table.css}" rel="stylesheet" />
+    <title>Order by index</title>
+</head>
+<body>
+
+Заказ
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Услуги</th>
+        <th>Статус</th>
+        <th>Сумма заказа</th>
+        <th>Заказчик</th>
+        <th>Специалист</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${order.getId()}">id</td>
+        <td th:text="${order.getItems()}">list</td>
+        <td th:text="${order.getStatus.getCode()}">status</td>
+        <td th:text="${order.getOrderPrice()}">price</td>
+        <td th:text="${order.getCustomer().getLogin()}">customer</td>
+        <td th:text="${order.getEmployee().getLogin()}">employee</td>
+        <td>
+            <a th:if="${order.getStatus.getCode().equals('В процессе')}">
+                <form th:method="PATCH" th:action="@{/specialistpanel/orders/{id}(id=${order.getId()})}">
+                    <select name="selectedOption">
+                        <option th:each="status: ${statuses}"
+                                th:text="${status.getValue()}"
+                                th:value="${status.getValue()}">
+                            status
+                    </select>
+                    <button type="submit">Изменить статус заказа</button>
+                </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<a th:href="@{/specialistpanel/orders}">Назад</a>
+</body>
+</html>

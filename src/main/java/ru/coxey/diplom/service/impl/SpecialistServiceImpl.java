@@ -47,4 +47,58 @@ public class SpecialistServiceImpl implements SpecialistService {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<Order> getOrdersBySpecialist(int id) {
+        Optional<Employee> employeeById = employeeRepository.findById(id);
+        List<Order> byEmployee = null;
+        if (employeeById.isPresent()) {
+            byEmployee = orderRepository.findOrdersByEmployee_Id(employeeById.get().getId());
+        }
+        return byEmployee;
+    }
+
+    @PreAuthorize("hasRole('ROLE_SPECIALIST')")
+    public List<Order> getOrders() {
+        if (getPerson().isPresent()) {
+            return orderRepository.findOrdersByEmployee_Id(getPerson().get().getId());
+        }
+        return List.of();
+    }
+
+    @PreAuthorize("hasRole('ROLE_SPECIALIST')")
+    public List<Order> getActiveOrders() {
+        if (getPerson().isPresent()) {
+            return orderRepository.findOrdersByEmployee_id_AndStatus(getPerson().get().getId(), Status.IN_PROCESS);
+        }
+        return List.of();
+    }
+
+    @PreAuthorize("hasRole('ROLE_SPECIALIST')")
+    public Order getOrderById(int id) {
+        Optional<Order> orderById = orderRepository.findById(id);
+        if (orderById.isPresent()) {
+            return orderById.get();
+        } else {
+            throw new IllegalArgumentException("Такого заказа не существует");
+        }
+    }
+
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_SPECIALIST')")
+    public void setStatusToOrder(int id, String statusOrder) {
+        Optional<Order> orderById = orderRepository.findById(id);
+        if (orderById.isPresent()) {
+            Order order = orderById.get();
+            order.setStatus(Status.valueOf(statusOrder));
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Такого заказа не существует");
+        }
+    }
+
+    protected Optional<Person> getPerson() {
+        String loginSpecialist = SecurityContextHolder.getContext().getAuthentication().getName();
+        return employeeRepository.findByLogin(loginSpecialist);
+    }
+
 }
