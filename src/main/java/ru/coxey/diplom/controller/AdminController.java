@@ -170,6 +170,13 @@ public class AdminController {
         return "redirect:/adminpanel";
     }
 
+    @GetMapping("/specialists/{id}/orders")
+    public String getOrdersBySpecialist(Model model, @PathVariable("id") int id) {
+        model.addAttribute("specialist", employeeService.getEmployeeById(id));
+        model.addAttribute("ordersBySpecialist", specialistService.getOrdersBySpecialist(id));
+        return "adminpanel/specialist/getOrdersBySpecialist";
+    }
+
     @GetMapping("/customers")
     public String getAllCustomers(Model model) {
         model.addAttribute("customers", customerService.getAllCustomers());
