@@ -22,7 +22,8 @@
     </thead>
     <tbody>
     <tr>
-        <td th:text="${order.getId()}">id</td>
+        <div th:if= "${order!=null}">
+        <td th:text="${order.id}">id</td>
         <td th:text="${order.getItems()}">list</td>
         <td th:text="${order.getStatus.getCode()}">status</td>
         <td th:text="${order.getOrderPrice()}">price</td>
@@ -40,6 +41,7 @@
                     <button type="submit">Изменить статус заказа</button>
                 </form>
         </td>
+        </div>
     </tr>
     </tbody>
 </table>
