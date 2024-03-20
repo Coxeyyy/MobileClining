@@ -11,11 +11,11 @@ values ('Chair', 500),
        ('Sofa', 1000),
        ('Bed', 2000);
 
-insert into orders(id_customer, id_specialist, status_order)
-values (3, 2, 'IN_PROCESS'),
-       (3, 5, 'READY'),
-       (4, 2, 'READY'),
-       (4, 2, 'IN_PROCESS');
+insert into orders(id_customer, id_specialist, status_order, order_price)
+values (3, 2, 'IN_PROCESS', 3500.0),
+       (3, 5, 'READY', 1000.0),
+       (4, 2, 'READY', 3000.0),
+       (4, 2, 'IN_PROCESS', 500.0);
 
 insert into orders_items(id_order, id_item)
 values (1, 1),
