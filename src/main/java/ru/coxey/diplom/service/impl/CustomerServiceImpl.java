@@ -37,11 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> getOrdersByCustomer(int id) {
         Optional<Customer> customerById = customerRepository.findById(id);
-        List<Order> listOrders = null;
         if (customerById.isPresent()) {
-            listOrders = orderRepository.findOrdersByCustomer_Id(customerById.get().getId());
+            return orderRepository.findOrdersByCustomer_Id(customerById.get().getId());
         }
-        return listOrders;
+        return List.of();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
