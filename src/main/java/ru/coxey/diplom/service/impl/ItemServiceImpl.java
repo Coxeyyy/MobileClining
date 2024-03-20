@@ -45,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
             itemFromDB.setPrice(item.getPrice());
             itemRepository.save(itemFromDB);
 
-        } {
+        } else {
             throw new IllegalArgumentException("Услуга не найдена");
         }
     }
