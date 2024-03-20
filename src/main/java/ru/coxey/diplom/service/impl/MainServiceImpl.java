@@ -20,6 +20,10 @@ public class MainServiceImpl implements MainService {
     public Employee getEmployee() {
         String loginEmployee = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Employee> byLogin = employeeRepository.findEmployeeByLogin(loginEmployee);
-        return byLogin.orElse(null);
+        if (byLogin.isPresent()) {
+            return byLogin.get();
+        } else {
+            throw new IllegalArgumentException("Такого сотрудника не существует");
+        }
     }
 }
