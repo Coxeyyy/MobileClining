@@ -23,7 +23,7 @@ public class ItemValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Item item = (Item) target;
-        Item itemByName = itemService.findItemByName(item.getName());
+        Item itemByName = itemService.findItemByNameForValidator(item.getName());
         if (itemByName != null) {
             errors.rejectValue("name", "", "Услуга с таким именем уже существует");
         }

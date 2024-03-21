@@ -10,6 +10,7 @@ create table users
     role             varchar(50),
     number_phone     varchar(50) UNIQUE,
     address          varchar(150),
+    telegram_user_id   int,
     can_create_order boolean,
     dtype            varchar(100)
 );

@@ -14,12 +14,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @JoinColumn(name = "id_customer")
-    @OneToOne
+    @OneToOne(cascade=CascadeType.MERGE)
     private Customer customer;
     @JoinColumn(name = "id_specialist")
     @OneToOne
     private Employee employee;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "orders_items",
             joinColumns = @JoinColumn(name = "id_order"),

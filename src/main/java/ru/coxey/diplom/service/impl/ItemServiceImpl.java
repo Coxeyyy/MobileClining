@@ -70,4 +70,10 @@ public class ItemServiceImpl implements ItemService {
             throw new IllegalArgumentException("Такой услуги не существует");
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Item findItemByNameForValidator(String name) {
+        Optional<Item> itemByName = itemRepository.findItemByName(name);
+        return itemByName.orElse(null);
+    }
 }

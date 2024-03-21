@@ -16,11 +16,21 @@ public class Customer extends Person {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "telegram_user_id")
+    private Long telegramUserId;
+
     @Column(name = "can_create_order")
     private Boolean canCreateOrder = true;
 
     public Customer() {
 
+    }
+
+    public Customer(String login, String password, Role role, String phoneNumber, String address, Long telegramUserId) {
+        super(login, password, role);
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.telegramUserId = telegramUserId;
     }
 
     public Customer(String phoneNumber, String address, Boolean canCreateOrder) {

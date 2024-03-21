@@ -21,4 +21,6 @@ public interface ItemService {
     Item createNewItem(Item item);
 
     Item findItemByName(String name);
+
+    Item findItemByNameForValidator(String name);
 }

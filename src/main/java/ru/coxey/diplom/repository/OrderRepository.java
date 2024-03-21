@@ -15,4 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findOrdersByEmployee_id_AndStatus(int id, Status status);
 
     List<Order> findOrdersByCustomer_Id(int id);
+
+    List<Order> findOrdersByCustomer_telegramUserId(Long telegramUserId);
 }
