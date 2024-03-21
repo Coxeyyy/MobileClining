@@ -9,11 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import ru.coxey.diplom.model.Customer;
 import ru.coxey.diplom.model.Item;
 import ru.coxey.diplom.model.Order;
-import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.model.enums.Status;
-import ru.coxey.diplom.repository.CustomerRepository;
-import ru.coxey.diplom.repository.ItemRepository;
-import ru.coxey.diplom.repository.OrderRepository;
 import ru.coxey.diplom.service.CustomerBotService;
 
 import java.util.*;

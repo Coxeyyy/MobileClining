@@ -37,7 +37,7 @@ class ItemValidatorTest {
     @Test
     void itemIsFound() {
         Item item = new Item("Chair", 500.0);
-        Mockito.when(itemService.findItemByName(anyString())).thenReturn(item);
+        Mockito.when(itemService.findItemByNameForValidator(anyString())).thenReturn(item);
         BindException errors = new BindException(item, "item");
         ValidationUtils.invokeValidator(itemValidator, item, errors);
         assertTrue(errors.hasErrors());
@@ -46,7 +46,7 @@ class ItemValidatorTest {
     @Test
     void itemNotFound() {
         Item item = new Item("Chair", 500.0);
-        Mockito.when(itemService.findItemByName(anyString())).thenReturn(null);
+        Mockito.when(itemService.findItemByNameForValidator(anyString())).thenReturn(null);
         BindException errors = new BindException(item, "item");
         ValidationUtils.invokeValidator(itemValidator, item, errors);
         assertFalse(errors.hasErrors());
