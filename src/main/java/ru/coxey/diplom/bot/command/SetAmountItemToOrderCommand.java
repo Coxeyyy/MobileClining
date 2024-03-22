@@ -44,6 +44,6 @@ public class SetAmountItemToOrderCommand implements Command {
         List<Item> allItems = customerBotService.getAllItemsForCustomer();
         InlineKeyboardMarkup itemsForOrderKeyboard = KeyboardFactory.getItemsForOrderKeyboard(allItems);
         TgUtil.promptWithKeyboard(chatId, "Выберите услугу", itemsForOrderKeyboard);
-        CustomerBot.mapState.put(chatId, "SET_TO_ORDER");
+        CustomerBot.mapState.put(chatId, "NONE");
     }
 }
