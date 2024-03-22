@@ -18,6 +18,7 @@ public class AdminServiceImpl implements AdminService {
         this.employeeRepository = employeeRepository;
     }
 
+    /** Метод возвращает список администраторов из таблицы users */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Employee> getAllAdmins() {
         return employeeRepository.findEmployeesByRole(Role.ADMIN);

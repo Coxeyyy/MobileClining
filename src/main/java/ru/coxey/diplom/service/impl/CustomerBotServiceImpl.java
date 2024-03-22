@@ -29,27 +29,32 @@ public class CustomerBotServiceImpl implements CustomerBotService {
         this.orderRepository = orderRepository;
     }
 
+    /** Метод регистрирует нового заказчика в таблицу users */
     @Override
     public Customer registerCustomer(String login, String address, String phoneNumber, Long telegramUserId) {
         Customer customer = new Customer(login, "defaultPass", Role.CUSTOMER,  phoneNumber, address, telegramUserId);
         return customerRepository.save(customer);
     }
 
+    /** Метод возвращает список всех услуг */
     @Override
     public List<Item> getAllItemsForCustomer() {
         return itemRepository.findAll();
     }
 
+    /** Метод ищет услугу по имени */
     @Override
     public Optional<Item> getItemByName(String name) {
         return itemRepository.findItemByName(name);
     }
 
+    /** Метод ищет заказчика по его telegramUserId */
     @Override
-    public Optional<Customer> getCustomerByTelegramUseId(Long telegramUserId) {
+    public Optional<Customer> getCustomerByTelegramUserId(Long telegramUserId) {
         return customerRepository.findCustomerByTelegramUserId(telegramUserId);
     }
 
+    /** Метод сохраняет заказ в БД */
     @Override
     public void saveOrder(Order order) {
         double orderPrice = 0;
@@ -60,6 +65,7 @@ public class CustomerBotServiceImpl implements CustomerBotService {
         orderRepository.save(order);
     }
 
+    /** Метод возвращает все заказы пользователя по его telegramUserId */
     @Override
     public List<Order> getAllOrdersByCustomer(Long telegramUserId) {
         Optional<Customer> customerByTelegramUserId = customerRepository.findCustomerByTelegramUserId(telegramUserId);
@@ -69,6 +75,10 @@ public class CustomerBotServiceImpl implements CustomerBotService {
         return List.of();
     }
 
+    /**
+     * Метод проверяет зарегистрирован ли заказчик
+     * Возвращает true, если такой заказчик есть, иначе false
+     */
     @Override
     public boolean isRegisteredCustomer(Long telegramUserId) {
         Optional<Customer> customerByTelegramUserId = customerRepository.findCustomerByTelegramUserId(telegramUserId);

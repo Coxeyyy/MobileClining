@@ -1,0 +1,11 @@
+ru.coxey.diplom
+ru.coxey.diplom.bot
+ru.coxey.diplom.bot.command
+ru.coxey.diplom.controller
+ru.coxey.diplom.model
+ru.coxey.diplom.model.enums
+ru.coxey.diplom.repository
+ru.coxey.diplom.security
+ru.coxey.diplom.service
+ru.coxey.diplom.service.impl
+ru.coxey.diplom.util

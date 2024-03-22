@@ -23,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /** Метод возвращает сотрудника по его ID */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Employee getEmployeeById(int id) {
         Optional<Employee> employeeById = employeeRepository.findById(id);
@@ -33,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /** Метод возвращает сотрудника по его логину */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Employee getEmployeeByLogin(String login) {
         Optional<Employee> employeeByLogin = employeeRepository.findEmployeeByLogin(login);
@@ -43,6 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /** Метод обновляет информацию сотрудника */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateEmployee(Employee admin, int id) {
@@ -59,6 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /** Метод удаляет сотрудника из БД */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteEmployee(int id) {

@@ -27,11 +27,13 @@ public class SpecialistServiceImpl implements SpecialistService {
         this.orderRepository = orderRepository;
     }
 
+    /** Метод возвращает список сотрудников с ролью специалист */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Employee> getAllSpecialists() {
         return employeeRepository.findEmployeesByRole(Role.SPECIALIST);
     }
 
+    /** Метод устанавливает конкретного специалиста на конкретный заказ */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void setSpecialistToOrder(int id, String specialistId) {
@@ -47,6 +49,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         }
     }
 
+    /** Метод возвращает список заказ по ID специалиста */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> getOrdersBySpecialist(int id) {
         Optional<Employee> employeeById = employeeRepository.findById(id);
@@ -57,6 +60,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         return byEmployee;
     }
 
+    /** Метод возвращает список заказов конкретного специалиста */
     @PreAuthorize("hasRole('ROLE_SPECIALIST')")
     public List<Order> getOrders() {
         if (getPerson().isPresent()) {
@@ -65,6 +69,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         return List.of();
     }
 
+    /** Метод возвращает список активных заказов конкретного специалиста */
     @PreAuthorize("hasRole('ROLE_SPECIALIST')")
     public List<Order> getActiveOrders() {
         if (getPerson().isPresent()) {
@@ -73,6 +78,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         return List.of();
     }
 
+    /** Метод возвращает заказ по его ID */
     @PreAuthorize("hasRole('ROLE_SPECIALIST')")
     public Order getOrderById(int id) {
         Optional<Order> orderById = orderRepository.findById(id);
@@ -83,6 +89,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         }
     }
 
+    /** Метод устанавливает статус IN_PROCESS или READY на конкретный заказ */
     @Transactional
     @PreAuthorize("hasRole('ROLE_SPECIALIST')")
     public void setStatusToOrder(int id, String statusOrder) {
@@ -96,6 +103,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         }
     }
 
+    /** Метод ищет в SecurityContextHolder логин специалиста */
     protected Optional<Person> getPerson() {
         String loginSpecialist = SecurityContextHolder.getContext().getAuthentication().getName();
         return employeeRepository.findByLogin(loginSpecialist);

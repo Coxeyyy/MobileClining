@@ -80,7 +80,7 @@ class CustomerBotServiceImplTest {
         Customer customer = new Customer("Artem", "defaultPass", Role.CUSTOMER,
                 "88001112233", "Ryazan", 653789L);
         when(customerRepository.findCustomerByTelegramUserId(anyLong())).thenReturn(Optional.of(customer));
-        Optional<Customer> customerFromService = customerBotService.getCustomerByTelegramUseId(424242L);
+        Optional<Customer> customerFromService = customerBotService.getCustomerByTelegramUserId(424242L);
         if (customerFromService.isPresent()) {
             assertEquals(customer.getLogin(), customerFromService.get().getLogin());
             assertEquals(customer.getRole(), customerFromService.get().getRole());

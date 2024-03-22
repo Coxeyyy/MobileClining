@@ -21,6 +21,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /** Метод регистрирует нового сотрудника в БД */
     @Transactional
     public void registerEmployee(Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));

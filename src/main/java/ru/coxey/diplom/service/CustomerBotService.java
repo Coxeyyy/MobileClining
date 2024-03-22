@@ -15,7 +15,7 @@ public interface CustomerBotService {
 
     Optional<Item> getItemByName(String name);
 
-    Optional<Customer> getCustomerByTelegramUseId(Long telegramUserId);
+    Optional<Customer> getCustomerByTelegramUserId(Long telegramUserId);
 
     void saveOrder(Order order);
 

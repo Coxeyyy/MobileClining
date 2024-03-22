@@ -15,8 +15,5 @@ public interface CustomerService {
     Customer getCustomerById(int id);
 
     @Transactional
-    void updateCustomer(Customer customer, int id);
-
-    @Transactional
     void deleteCustomer(int id);
 }

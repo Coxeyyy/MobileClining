@@ -19,16 +19,19 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
     }
 
+    /** Метод возвращает список заказов */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
+    /** Метод возвращает список заказов, которые имеют статус в процессе */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> getActiveOrders() {
         return orderRepository.findByStatus(Status.IN_PROCESS);
     }
 
+    /** Возвращает заказ по его ID */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Order getOrderById(int id) {
         Optional<Order> orderById = orderRepository.findById(id);

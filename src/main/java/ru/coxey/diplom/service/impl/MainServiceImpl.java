@@ -16,6 +16,13 @@ public class MainServiceImpl implements MainService {
         this.employeeRepository = employeeRepository;
     }
 
+    /**
+     * Метод достает из SecurityContextHolder логин сотрудника
+     * и ищет его в БД
+     * Метод нужен, чтобы при открытии главной страницы сайта
+     * сотруднику в зависимости от его роли показывалась ссылка
+     * либо на админ панель либо на панель специалиста
+     */
     @Override
     public Employee getEmployee() {
         String loginEmployee = SecurityContextHolder.getContext().getAuthentication().getName();

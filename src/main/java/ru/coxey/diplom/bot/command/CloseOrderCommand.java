@@ -28,7 +28,7 @@ public class CloseOrderCommand implements Command {
         Order order = new Order();
         order.setItems(CustomerBot.mapListItem.get(chatId));
         order.setStatus(Status.IN_PROCESS);
-        Optional<Customer> byId = customerBotService.getCustomerByTelegramUseId(telegramUserId);
+        Optional<Customer> byId = customerBotService.getCustomerByTelegramUserId(telegramUserId);
         order.setCustomer(byId.get());
         customerBotService.saveOrder(order);
         CustomerBot.mapListItem.remove(chatId);

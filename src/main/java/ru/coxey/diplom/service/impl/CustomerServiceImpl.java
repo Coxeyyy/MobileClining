@@ -29,11 +29,13 @@ public class CustomerServiceImpl implements CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /** Метод возвращает всех заказчиков */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
+    /** Метод возвращает все заказы по ID заказчика */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Order> getOrdersByCustomer(int id) {
         Optional<Customer> customerById = customerRepository.findById(id);
@@ -43,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
         return List.of();
     }
 
+    /** Метод возвращает заказчика по его ID */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Customer getCustomerById(int id) {
         Optional<Customer> customerById = customerRepository.findById(id);
@@ -53,21 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    @Transactional
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCustomer(Customer customer, int id) {
-        Optional<Customer> customerById = customerRepository.findById(id);
-        if (customerById.isPresent()) {
-            Customer customerFromDB = customerById.get();
-            customerFromDB.setId(customer.getId());
-            customerFromDB.setLogin(customer.getLogin());
-            customerFromDB.setPassword(passwordEncoder.encode(customer.getPassword()));
-            customerRepository.save(customerFromDB);
-        } else {
-            throw new IllegalArgumentException("Такого пользователя не существует");
-        }
-    }
-
+    /** Метод удаляет заказчика по его ID */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteCustomer(int id) {

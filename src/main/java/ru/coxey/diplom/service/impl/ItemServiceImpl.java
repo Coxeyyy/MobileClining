@@ -19,11 +19,13 @@ public class ItemServiceImpl implements ItemService {
         this.itemRepository = itemRepository;
     }
 
+    /** Метод возвращает список всех услуг */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
+    /** Метод возвращает услугу по её ID */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Item getItemById(int id) {
         Optional<Item> itemById = itemRepository.findById(id);
@@ -34,6 +36,7 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    /** Метод обновляет информацию по её ID */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateItem(Item item, int id) {
@@ -49,18 +52,21 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    /** Метод удаляет услугу из БД */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteItem(int id) {
         itemRepository.deleteById(id);
     }
 
+    /** Метод сохраняет новую услугу в БД */
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Item createNewItem(Item item) {
         return itemRepository.save(item);
     }
 
+    /** Метод ищет услугу по её имени */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Item findItemByName(String name) {
         Optional<Item> itemByName = itemRepository.findItemByName(name);
@@ -71,6 +77,7 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    /** Метод, который используется валидатором для поиска услуги по имени */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Item findItemByNameForValidator(String name) {
         Optional<Item> itemByName = itemRepository.findItemByName(name);

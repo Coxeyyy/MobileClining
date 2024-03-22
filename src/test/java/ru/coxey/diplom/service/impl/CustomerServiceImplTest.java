@@ -81,19 +81,6 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void updateCustomer() {
-        when(customerRepository.findById(anyInt())).thenReturn(Optional.of(customer));
-        customerService.updateCustomer(customer, 5);
-        verify(customerRepository, times(1)).findById(anyInt());
-    }
-
-    @Test
-    void updateCustomer_throwIllegalArgumentException() {
-        when(customerRepository.findById(anyInt())).thenReturn(Optional.empty());
-        assertThrows(IllegalArgumentException.class, () -> customerService.updateCustomer(new Customer(), 5));
-    }
-
-    @Test
     void deleteCustomer() {
         doNothing().when(customerRepository).deleteById(anyInt());
         customerService.deleteCustomer(5);
