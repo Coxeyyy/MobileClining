@@ -1,6 +1,4 @@
 drop table if exists users, orders_items, orders, items;
-drop trigger if exists after_insert_update_order_price on orders_items;
-drop function if exists update_price_order();
 
 create table users
 (
@@ -36,31 +34,3 @@ create table orders_items
     id_order int REFERENCES orders (id_order),
     id_item  int REFERENCES items (id_item) on DELETE CASCADE
 );
-
--- -- Создание функции и триггера для обновления колонки order_price таблицы orders
--- -- после добавления или обновления состава заказа в orders_items
--- CREATE OR REPLACE FUNCTION update_price_order() RETURNS trigger AS
--- $update_total_price$
--- declare
---     sum_orders decimal;
--- BEGIN
---     select sum(i.item_price)
---     into sum_orders
---     from orders as ord
---              join orders_items as oi on oi.id_order = ord.id_order
---              join items i on oi.id_item = i.id_item
---     where ord.id_order = NEW.id_order;
---
---     update orders
---     set order_price = sum_orders
---     where id_order = NEW.id_order;
---
---     RETURN NEW;
--- END;
--- $update_total_price$ LANGUAGE plpgsql;
---
--- CREATE OR REPLACE TRIGGER after_insert_update_order_price
---     AFTER INSERT OR UPDATE
---     ON orders_items
---     FOR EACH ROW
--- EXECUTE PROCEDURE update_price_order();
