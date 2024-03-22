@@ -37,6 +37,9 @@ class AdminControllerTest {
     @MockBean
     private EmployeeService employeeService;
 
+    @MockBean
+    private RegistrationService registrationService;
+
     private final int ID = 1;
 
     @Test
