@@ -11,7 +11,6 @@ import ru.coxey.diplom.model.Employee;
 import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.service.MainService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

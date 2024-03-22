@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.coxey.diplom.model.Employee;
 import ru.coxey.diplom.repository.EmployeeRepository;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

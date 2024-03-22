@@ -1,6 +1,5 @@
 package ru.coxey.diplom.service.impl;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,24 +36,6 @@ class CustomerBotServiceImplTest {
 
     @InjectMocks
     private CustomerBotServiceImpl customerBotService;
-
-    @Test
-    @Disabled
-    void registerEmployee() {
-        Customer customer = new Customer("Artem", "defaultPass", Role.CUSTOMER,
-                "88001112233", "Ryazan", 653789L);
-        when(customerRepository.save(customer)).thenReturn(customer);
-        Customer customerFromService = customerBotService.registerCustomer("Artem", "Ryazan",
-                "88001112233",  653789L);
-        assertAll(
-                () -> assertEquals(customer.getLogin(), customerFromService.getLogin()),
-                () -> assertEquals(customer.getPhoneNumber(), customerFromService.getPhoneNumber()),
-                () -> assertEquals(customer.getPassword(), customerFromService.getPassword()),
-                () -> assertEquals(customer.getAddress(), customerFromService.getAddress()),
-                () -> assertEquals(customer.getRole(), customerFromService.getRole()),
-                () -> assertEquals(customer.getTelegramUserId(), customerFromService.getTelegramUserId())
-        );
-    }
 
     @Test
     void getAllItems() {

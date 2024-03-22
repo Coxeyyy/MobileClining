@@ -4,13 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.coxey.diplom.model.Customer;
 import ru.coxey.diplom.model.Employee;
-import ru.coxey.diplom.model.Item;
-import ru.coxey.diplom.model.Order;
 import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.service.*;
-import ru.coxey.diplom.util.ItemValidator;
 import ru.coxey.diplom.util.PersonValidator;
 
 import javax.validation.Valid;

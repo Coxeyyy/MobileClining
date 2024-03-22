@@ -2,12 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <link th:href="@{/style_css/style_for_panel.css}" rel="stylesheet"/>-->
-<!--    <link th:href="@{/style_css/container.css}" rel="stylesheet"/>-->
     <title>Login page</title>
 </head>
 <body>
-
 <form name="f" method="post" action="/process_login">
     <label for="username">Введите имя пользователя: </label>
     <input type="text" name="username" id="username"/>
@@ -21,6 +18,5 @@
         Неправильные имя или пароль
     </div>
 </form>
-
 </body>
 </html>
