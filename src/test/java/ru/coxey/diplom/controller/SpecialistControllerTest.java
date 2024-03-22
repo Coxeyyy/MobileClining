@@ -14,6 +14,7 @@ import ru.coxey.diplom.model.Item;
 import ru.coxey.diplom.model.Order;
 import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.model.enums.Status;
+import ru.coxey.diplom.service.EmployeeService;
 import ru.coxey.diplom.service.SpecialistService;
 
 import java.util.ArrayList;
@@ -22,8 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SpecialistController.class)
@@ -36,7 +36,12 @@ class SpecialistControllerTest {
     @MockBean
     private SpecialistService specialistService;
 
+    @MockBean
+    private EmployeeService employeeService;
+
     private List<Order> listOrders;
+
+    private final int ID = 1;
 
     @BeforeEach
     void setUp() {
@@ -107,6 +112,85 @@ class SpecialistControllerTest {
                 .andExpect(view().name("specialistpanel/activeOrders"))
                 .andExpect(model().attributeExists("orders"));
         verify(specialistService, times(1)).getActiveOrders();
+    }
+
+    @Test
+    void getAllSpecialist() throws Exception {
+        when(specialistService.getAllSpecialists()).thenReturn(getListSpecialists());
+        mockMvc.perform(get("/adminpanel/specialists"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("specialists"))
+                .andExpect(view().name("adminpanel/specialist/specialists"));
+    }
+
+
+    @Test
+    void getSpecialistById() throws Exception {
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(getSpecialist());
+        mockMvc.perform(get("/adminpanel/specialists/" + ID))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("specialist"))
+                .andExpect(view().name("adminpanel/specialist/showSpecialistByIndex"));
+    }
+
+    @Test
+    void editSpecialist() throws Exception {
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(getSpecialist());
+        mockMvc.perform(get("/adminpanel/specialists/" + ID + "/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("adminpanel/specialist/editSpecialist"));
+    }
+
+    @Test
+    void updateSpecialist_notUpdateAndRedirect() throws Exception {
+        mockMvc.perform(patch("/adminpanel/specialists/" + ID))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("roles"))
+                .andExpect(view().name("adminpanel/specialist/editSpecialist"));
+    }
+
+    @Test
+    void deleteSpecialist() throws Exception {
+        doNothing().when(employeeService).deleteEmployee(anyInt());
+        mockMvc.perform(delete("/adminpanel/specialists/" + ID))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/adminpanel"));
+    }
+
+    @Test
+    void getOrdersBySpecialist() throws Exception {
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(getSpecialist());
+        when(specialistService.getOrdersBySpecialist(anyInt())).thenReturn(getListOrders());
+        mockMvc.perform(get("/adminpanel/specialists/" + ID + "/orders"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("adminpanel/specialist/getOrdersBySpecialist"))
+                .andExpect(model().attributeExists("specialist"))
+                .andExpect(model().attributeExists("ordersBySpecialist"));
+    }
+
+    private Employee getSpecialist() {
+        return new Employee("Artem", "777", Role.SPECIALIST);
+    }
+
+    private List<Employee> getListSpecialists() {
+        Employee emp1 = new Employee("Artem", "777", Role.SPECIALIST);
+        Employee emp2 = new Employee("Vitalik", "111", Role.SPECIALIST);
+        return List.of(emp1, emp2);
+    }
+
+    private List<Order> getListOrders() {
+        Customer customer = new Customer("Artem", "777", Role.CUSTOMER, "89995556611",
+                "Ryazan", true);
+        Employee specialist = new Employee("Artem", "777", Role.SPECIALIST);
+        Order order1 = new Order(customer, specialist, getListItems(), Status.IN_PROCESS, 511.1);
+        Order order2 = new Order(customer, specialist, getListItems(), Status.IN_PROCESS, 200.9);
+        return List.of(order1, order2);
+    }
+
+    private List<Item> getListItems() {
+        Item item1 = new Item("Sofa", 2537.1);
+        Item item2 = new Item("Carpet", 3671.8);
+        return List.of(item1, item2);
     }
 
 }
