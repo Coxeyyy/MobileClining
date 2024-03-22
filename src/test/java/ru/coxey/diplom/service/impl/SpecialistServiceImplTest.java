@@ -1,11 +1,6 @@
 package ru.coxey.diplom.service.impl;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,7 +9,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ru.coxey.diplom.model.Employee;
 import ru.coxey.diplom.model.Order;
-import ru.coxey.diplom.model.Person;
 import ru.coxey.diplom.model.enums.Role;
 import ru.coxey.diplom.model.enums.Status;
 import ru.coxey.diplom.repository.EmployeeRepository;
@@ -23,28 +17,23 @@ import ru.coxey.diplom.repository.OrderRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(MockitoExtension.class)
+
 @WebMvcTest(SpecialistServiceImpl.class)
 class SpecialistServiceImplTest {
 
-//    @InjectMocks
     @Autowired
     private SpecialistServiceImpl specialistService;
 
     @MockBean
     private EmployeeRepository employeeRepository;
+
     @MockBean
     private OrderRepository orderRepository;
-
-    @Mock
-    private SpecialistServiceImpl mockService;
 
     @Test
     void getAllSpecialists() {
