@@ -3,6 +3,7 @@ package ru.coxey.diplom.model;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "items")
@@ -65,5 +66,18 @@ public class Item {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id && Objects.equals(name, item.name) && Objects.equals(price, item.price) && Objects.equals(orderList, item.orderList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, orderList);
     }
 }

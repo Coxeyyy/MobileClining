@@ -95,4 +95,10 @@ class ItemServiceImplTest {
         assertThrows(IllegalArgumentException.class, () -> itemService.findItemByName(anyString()));
     }
 
+    @Test
+    void findItemByNameForValidator() {
+        when(itemRepository.findItemByName(anyString())).thenReturn(Optional.empty());
+        assertNull(itemService.findItemByNameForValidator("test"));
+    }
+
 }
