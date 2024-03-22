@@ -83,4 +83,12 @@ public class Customer extends Person {
     public void setCanCreateOrder(Boolean canCreateOrder) {
         this.canCreateOrder = canCreateOrder;
     }
+
+    public Long getTelegramUserId() {
+        return telegramUserId;
+    }
+
+    public Boolean getCanCreateOrder() {
+        return canCreateOrder;
+    }
 }

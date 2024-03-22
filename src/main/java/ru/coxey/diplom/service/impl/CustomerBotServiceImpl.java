@@ -52,11 +52,11 @@ public class CustomerBotServiceImpl implements CustomerBotService {
 
     @Override
     public void saveOrder(Order order) {
-        double sumOrder = 0;
+        double orderPrice = 0;
         for (int i = 0; i < order.getItems().size(); i++) {
-            sumOrder += order.getItems().get(i).getPrice();
+            orderPrice += order.getItems().get(i).getPrice();
         }
-        order.setOrderPrice(sumOrder);
+        order.setOrderPrice(orderPrice);
         orderRepository.save(order);
     }
 
