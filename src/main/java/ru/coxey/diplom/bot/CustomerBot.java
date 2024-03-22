@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.coxey.diplom.model.Item;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class CustomerBot extends TelegramLongPollingBot {
@@ -14,13 +15,13 @@ public class CustomerBot extends TelegramLongPollingBot {
     @Value("${bot.name}")
     private String botName;
 
-    public static final Map<Long, String> mapState = new HashMap<>();
+    public static final Map<Long, String> mapState = new ConcurrentHashMap<>();
 
-    public static final Map<Long, String> mapPhoneNumbers = new HashMap<>();
+    public static final Map<Long, String> mapPhoneNumbers = new ConcurrentHashMap<>();
 
-    public static final Map<Long, Item> mapItemName = new HashMap<>();
+    public static final Map<Long, Item> mapItemName = new ConcurrentHashMap<>();
 
-    public static final Map<Long, List<Item>> mapListItem = new HashMap<>();
+    public static final Map<Long, List<Item>> mapListItem = new ConcurrentHashMap<>();
 
     private final MessageHandler messageHandler;
 
